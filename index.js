@@ -28,8 +28,10 @@ const connection = mysql.createConnection({
 });
 
 
+//POKEMON
+
 //* ALLE POKEMON MED DERES NAVNE OG STATS.
-app.get('pokemon/',(req, res) => {
+app.get(' /',(req, res) => {
     connection.query('SELECT* FROM pokemon',(error,results) => {
         if (error) {
             return res.status(500).send("Databasefejl");
@@ -100,6 +102,9 @@ app.get('/pokemon/filter', (req, res) => {
         res.json(results);
     });
 });
+
+
+
 
 
 app.listen(port, () =>{
