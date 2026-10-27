@@ -29,7 +29,7 @@ const connection = mysql.createConnection({
 
 
 //* ALLE POKEMON MED DERES NAVNE OG STATS.
-app.get('pokemon/',(req, res) => {
+app.get('/',(req, res) => {
     connection.query('SELECT* FROM pokemon',(error,results) => {
         if (error) {
             return res.status(500).send("Databasefejl");
@@ -100,6 +100,69 @@ app.get('/pokemon/filter', (req, res) => {
         res.json(results);
     });
 });
+
+
+// Dashboard Get - Post
+
+
+//Hvilken pokemon-type har den højeste gennemsnitlige attack?
+// 1. Gennemsnitlig attack pr. type
+
+
+app.get('/dashboard/average-attack', (req, res) => {
+    const sql = `SELECT primary_type AS type,AVG(attack) AS average_attack FROM pokemon
+        GROUP BY primary_type
+        ORDER BY average_attack DESC`;
+
+    connection.query(sql, (error, results) => {
+        if (error) {
+            console.error("SQL-fejl:", error);
+            return res.status(500).send("Error");
+        }
+
+        res.json(results);
+    });
+});
+
+// Hvor mange Pokemons findes der af hver type?
+
+app.get('/dashboard/type-distribution', (req, res) => {
+    const sql = `SELECT primary_type AS type,COUNT(*) AS pokemon_count FROM pokemon
+        GROUP BY primary_type
+        ORDER BY pokemon_count DESC`;
+
+    connection.query(sql, (error, results) => {
+        if (error) {
+            console.error("SQL-fejl:", error);
+            return res.status(500).send("error");
+        }
+
+        res.json(results);
+    });
+});
+
+
+// Hvilke trainers har flest Pokémon?
+
+
+app.get('/dashboard/most-trainers', (req, res) => {
+    const sql = `SELECT trainer.trainer_id,trainer.trainer_name, COUNT(trainer_pokemon.pokedex_number) AS pokemon_count
+        FROM trainer
+        ON trainer.trainer_id = trainer_pokemon.trainer_id
+        GROUP BY trainer.trainer_id, trainer.trainer_name
+        ORDER BY pokemon_count DESC
+        LIMIT 5`;
+
+    connection.query(sql, (error, results) => {
+        if (error) {
+            console.error("SQL-fejl:", error);
+            return res.status(500).send("Databasefejl");
+        }
+
+        res.json(results);
+    });
+});
+
 
 
 app.listen(port, () =>{
