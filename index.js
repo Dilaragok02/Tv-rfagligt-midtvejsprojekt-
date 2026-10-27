@@ -31,10 +31,13 @@ const connection = mysql.createConnection({
 //POKEMON
 
 //* ALLE POKEMON MED DERES NAVNE OG STATS.
-app.get(' /',(req, res) => {
-    connection.query('SELECT* FROM pokemon',(error,results) => {
+
+app.get('/pokemon', (req, res) => {
+    connection.query('SELECT * FROM pokemon', (error, results) => {
         if (error) {
-            return res.status(500).send("Databasefejl");
+            return res.status(500).json({
+                error: "Databasefejl"
+            });
         }
 
         res.json(results);
@@ -48,7 +51,7 @@ app.get('/single-safe', (req, res) => {
 
     connection.query(
         'SELECT * FROM pokemon WHERE name = ?',
-        [name],
+        [requestParameter],
         (error, results) => {
             if (error) {
                 return res.status(500).json({
