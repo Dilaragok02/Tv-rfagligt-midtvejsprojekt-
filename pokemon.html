@@ -8,6 +8,9 @@
 </head>
 <body>
 
+<Body class="pokemon-page">
+
+
 <h1>Pokemonx</h1>
 <p>Pokemon</p>
 
@@ -29,10 +32,25 @@
 <input type="number" id="attack" min="0" placeholder="Enter attack">
 
 <button id="filterButton">Filter Pokémon</button>
+<button id="resetButton">Reset Filters</button>
+
+<label for="sort">Sort Pokémon:</label>
+<select id="sort">
+    <option value="">Default</option>
+    <option value="nameAZ">Name (A-Z)</option>
+    <option value="nameZA">Name (Z-A)</option>
+    <option value="hp">HP (Highest first)</option>
+    <option value="attack">Attack (Highest first)</option>
+    <option value="speed">Speed (Highest first)</option>
+</select>
+
+
 
 <h2>All Pokémon</h2>
 
 <div id="pokemonList"></div>
+<div id="pokemonDetails"></div>
+
 <script src="pokemon.js"></script>
 </body>
 </html>

@@ -1,6 +1,9 @@
 
 const pokemonList = document.querySelector("#pokemonList");
 const filterButton = document.querySelector("#filterButton");
+const resetButton = document.querySelector("#resetButton");
+const pokkemonDetails = document.querySelector("#pokemonDetails");
+
 
 async function getPokemon() {
     const name = document.querySelector("#search").value;
@@ -36,10 +39,41 @@ async function getPokemon() {
 
     const pokemons = await response.json();
 
+    const sort = document.querySelector("#sort").value;
+
+    if (sort === "nameAZ") {
+        pokemons.sort((a, b) => a.name.localeCompare(b.name));
+    }
+
+    if (sort === "nameZA") {
+        pokemons.sort((a, b) => b.name.localeCompare(a.name));
+    }
+
+    if (sort === "hp") {
+        pokemons.sort((a, b) => b.hp - a.hp);
+    }
+
+    if (sort === "attack") {
+        pokemons.sort((a, b) => b.attack - a.attack);
+    }
+
+    if (sort === "speed") {
+        pokemons.sort((a, b) => b.speed - a.speed);
+    }
+
     pokemonList.replaceChildren();
+
+    if (pokemons.length === 0) {
+        pokemonList.textContent = "No Pokémon found.";
+        return;
+    }
 
     pokemons.forEach((pokemon) => {
         const card = document.createElement("div");
+
+        card.addEventListener("click", () => {
+            showPokemonDetails(pokemon);
+        });
 
         const name = document.createElement("h2");
         name.textContent = pokemon.name;
@@ -79,7 +113,58 @@ async function getPokemon() {
     });
 }
 
+function showPokemonDetails(pokemon) {
+    pokemonDetails.replaceChildren();
+
+    const title = document.createElement("h2");
+    title.textContent = pokemon.name;
+
+    const type = document.createElement("p");
+    type.textContent = "Type: " + pokemon.primary_type;
+
+    const hp = document.createElement("p");
+    hp.textContent = "HP: " + pokemon.hp;
+
+    const attack = document.createElement("p");
+    attack.textContent = "Attack: " + pokemon.attack;
+
+    const defence = document.createElement("p");
+    defence.textContent = "Defence: " + pokemon.defence;
+
+    const speed = document.createElement("p");
+    speed.textContent = "Speed: " + pokemon.speed;
+
+    const closeButton = document.createElement("button");
+    closeButton.textContent = "Close";
+
+    closeButton.addEventListener("click", () => {
+        pokemonDetails.replaceChildren();
+    });
+
+    pokemonDetails.append(
+        title,
+        type,
+        hp,
+        attack,
+        defence,
+        speed,
+        closeButton
+    );
+}
+
+function resetFilters() {
+    document.querySelector("#search").value = "";
+    document.querySelector("#type").value = "";
+    document.querySelector("#attack").value = "";
+    document.querySelector("#sort").value = "";
+
+    getPokemon();
+}
+
 filterButton.addEventListener("click", getPokemon);
+resetButton.addEventListener("click", resetFilters);
+document.querySelector("#sort").addEventListener("change", getPokemon);
+
 
 getPokemon();
 
