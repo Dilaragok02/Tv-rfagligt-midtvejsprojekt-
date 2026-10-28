@@ -107,7 +107,7 @@ app.get('/pokemon/filter', (req, res) => {
 
 // Hent en træners Pokémon
 app.get('/trainers/:id/pokemon', (req, res) => {
-    const trainerId = req.params.id;
+    const trainerId = req.params.id;-
 
     const sql = `
         SELECT pokemon.*
