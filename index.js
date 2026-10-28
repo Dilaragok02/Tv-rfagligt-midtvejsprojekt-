@@ -1,8 +1,3 @@
-require("dotenv").config();
-console.log("DBHOST:", process.env.DBHOST);
-console.log("DBUSER:", process.env.DBUSER);
-console.log("DBDATABASE:", process.env.DBDATABASE);
-
 console.log('Happy developing ✨')
 console.log('Happy developing ✨')
 //npm install express --save
@@ -11,6 +6,11 @@ const express = require("express");
 const mysql = require("mysql2");
 //npm install cors --save
 const cors = require("cors");
+
+require("dotenv").config();
+console.log("DBHOST:", process.env.DBHOST);
+console.log("DBUSER:", process.env.DBUSER);
+console.log("DBDATABASE:", process.env.DBDATABASE);
 
 const app = express();
 
@@ -142,6 +142,67 @@ app.get('/trainers/:id/pokemon', (req, res) => {
 
 
 
+
+
+
+
+
+
+
+
+//*Trainers
+
+app.get('pokemon/',(req, res) => {
+    connection.query('SELECT* FROM Trainers',(error,results) => {
+        if (error) {
+            return res.status(500).send("Databasefejl");
+        }
+
+        res.json(results);
+    });
+});
+
+//* Trainers
+// Hent alle trainers
+app.get('/trainers',(req,res)=> {
+    connection.query(
+        'SELECT* FROM trainer',
+        (error, results)=> {
+               if (error) {
+                   return res.status(500).json({
+                       error: "Databasefejl"
+                   });
+               }
+
+                   res.json(results);
+            }
+    );
+        });
+
+
+// Hent en trainers Pokemon
+app.get('/trainers/:id/pokemon', (req, res) => {
+    const trainerId = req.params.id;
+    const sql = `
+    SELECT p.*
+    FROM pokemon.pokemon p
+    JOIN pokemon.trainer_pokemon tp
+        ON p.pokedex_number = tp.pokedex_number
+    WHERE tp.trainer_id = ?
+`;
+
+
+    connection.query(sql, [trainerId], (error, results) => {
+        if (error) {
+            console.error("SQL-fejl:", error);
+            return res.status(500).json({
+                error: "Error"
+            });
+        }
+
+        res.json(results);
+    });
+});
 
 
 
