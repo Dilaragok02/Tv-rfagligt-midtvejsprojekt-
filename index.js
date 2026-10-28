@@ -134,7 +134,7 @@ app.get('/dashboard/type-distribution', (req, res) => {
     connection.query(sql, (error, results) => {
         if (error) {
             console.error("SQL-fejl:", error);
-            return res.status(500).send("error");
+            return res.status(500).send("Kend din pokemons bedre");
         }
 
         res.json(results);
@@ -148,6 +148,7 @@ app.get('/dashboard/type-distribution', (req, res) => {
 app.get('/dashboard/most-trainers', (req, res) => {
     const sql = `SELECT trainer.trainer_id,trainer.trainer_name, COUNT(trainer_pokemon.pokedex_number) AS pokemon_count
         FROM trainer
+            JOIN trainer_pokemon
         ON trainer.trainer_id = trainer_pokemon.trainer_id
         GROUP BY trainer.trainer_id, trainer.trainer_name
         ORDER BY pokemon_count DESC
@@ -156,12 +157,37 @@ app.get('/dashboard/most-trainers', (req, res) => {
     connection.query(sql, (error, results) => {
         if (error) {
             console.error("SQL-fejl:", error);
-            return res.status(500).send("Databasefejl");
+            return res.status(500).send("Du har fanget 0 pokemon");
         }
 
         res.json(results);
     });
 });
+
+app.get('/pokemon/:id/moves', (req, res) => {
+    const sql = `SELECT moves.move_id, moves.move_name, moves.power, moves.accuracy, moves.move_type,
+            moves.category
+        FROM pokemon_has_moves
+        JOIN moves
+            ON pokemon_has_moves.move_id = moves.move_id
+        WHERE pokemon_has_moves.pokedex_number = ?`;
+
+    connection.query(sql, [req.params.id], (error, results) => {
+        if (error) {
+            return res.status(500).json({ error: "Choose new pokedex number" });
+        }
+
+        res.json(results);
+    });
+});
+
+
+
+
+
+
+
+
 
 
 
