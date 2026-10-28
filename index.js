@@ -102,6 +102,54 @@ app.get('/pokemon/filter', (req, res) => {
 });
 
 
+//* Trainers
+// Hent alle trainers
+app.get('/trainers',(req,res)=> {
+    connection.query(
+        'SELECT* FROM trainer',
+        (error, results)=> {
+               if (error) {
+                   return res.status(500).json({
+                       error: "Databasefejl"
+                   });
+               }
+
+                   res.json(results);
+            }
+    );
+        });
+
+
+// Hent en trainers Pokemon
+app.get('/trainers/:id/pokemon', (req, res) => {
+    const trainerId = req.params.id;
+
+    const sql = `SELECT p.*
+        FROM pokemon.p
+        JOIN trainer_pokemon tp
+        ON p.pokedex_number = tp.pokedex_number
+        WHERE tp.trainer_id = ?`;
+
+    connection.query(sql, [trainerId], (error, results) => {
+        if (error) {
+            console.error("SQL-fejl:", error);
+            return res.status(500).json({
+                error: "Error"
+            });
+        }
+
+        res.json(results);
+    });
+});
+
+
+
+
+
+
+
+
+
 // Dashboard Get - Post
 
 
