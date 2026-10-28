@@ -83,3 +83,4 @@ filterButton.addEventListener("click", getPokemon);
 
 getPokemon();
 
+//*
