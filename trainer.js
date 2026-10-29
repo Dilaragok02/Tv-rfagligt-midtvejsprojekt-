@@ -1,7 +1,7 @@
 let selectedTrainerId = null;
 let allTrainersData = [];
 
-// 1. GET & UPDATE: Indlæs og opdater dashboardet samt dropdowns
+// /1. GET & UPDATE: Indlæs og opdater dashboardet samt dropdowns
 async function loadTrainersSystem() {
     try {
         // Hent alle trænere
