@@ -13,6 +13,7 @@ console.log("DBUSER:", process.env.DBUSER);
 console.log("DBDATABASE:", process.env.DBDATABASE);
 
 const app = express();
+app.use(express.json());
 
 const port = 3000;
 
@@ -132,28 +133,71 @@ app.get('/trainers',(req,res)=> {
 
 
 // Hent en trainers Pokemon
-app.get('/trainers/:id/pokemon', (req, res) => {
+// 2. GET: Hent Pokémon for en bestemt træner
+app.get('/api/trainers/pokemon', (req, res) => {
     const trainerId = req.params.id;
-    const sql = `
-    SELECT p.*
-    FROM pokemon.pokemon p
-    JOIN pokemon.trainer_pokemon tp
-        ON p.pokedex_number = tp.pokedex_number
-    WHERE tp.trainer_id = ?
-`;
+    const sql = `SELECT pokemon.name FROM pokemon 
+        JOIN trainer_pokemon
+        ON pokemon.pokedex_number = trainer_pokemon.pokedex_number
+        WHERE trainer_pokemon.trainer_id = 1;`
 
-
-    connection.query(sql, [trainerId], (error, results) => {
-        if (error) {
-            console.error("SQL-fejl:", error);
-            return res.status(500).json({
-                error: "Error"
-            });
-        }
-
-        res.json(results);
+        connection.query(sql, [trainerId], (error, results) => {
+            if (error) return res.status(500).json({ error: error.message });
+            res.json(results);
+        });
     });
+
+    // 3. POST: Opret en ny træner
+app.post("/trainer/new/", (req, res) => {
+    const name = req.body.name
+    const hometown = req.body.hometown
+    const age = req.body.age
+
+    connection.query(
+        "INSERT INTO trainer (trainer_name, hometown, age) VALUES (?, ?, ?)",
+        [name, hometown, age],
+        (error, results) => {
+
+            if (error) {
+                console.error(error);
+                return res.status(500).send("Kunne ikke oprette trainer");
+            }
+
+            res.send("Trainer created");
+        }
+    );
 });
+
+
+    // 4. POST: Tilføj en eksisterende Pokémon til en træner (i bindingstabellen)
+     app.post("/trainer/catch/", (req, res) => {
+         const trainer_id = req.body.trainer_id;
+         const pokedex_number = req.body.pokedex_number;
+
+         connection.query(
+             "INSERT INTO trainer_pokemon (trainer_id, pokedex_number) VALUES (?, ?)",
+             [trainer_id, pokedex_number],
+             (error, results) => {
+                 res.send("Pokemon was caught");
+             }
+         );
+     });
+    
+
+
+
+
+
+
+
+
+    // Start serveren
+    app.listen(3000, () => {
+        console.log(`Serveren kører! Gå til http://localhost:3000}`);
+});
+
+
+
 
 
 
@@ -207,22 +251,24 @@ app.get('/dashboard/type-distribution', (req, res) => {
 
 
 app.get('/dashboard/most-trainers', (req, res) => {
-    const sql = `SELECT trainer.trainer_id,trainer.trainer_name, COUNT(trainer_pokemon.pokedex_number) AS pokemon_count
+    const sql = `
+        SELECT trainer.trainer_id, trainer.trainer_name, COUNT(trainer_pokemon.pokedex_number) AS pokemon_count
         FROM trainer
         ON trainer.trainer_id = trainer_pokemon.trainer_id
         GROUP BY trainer.trainer_id, trainer.trainer_name
         ORDER BY pokemon_count DESC
-        LIMIT 5`;
+        LIMIT 5
+    `;
 
     connection.query(sql, (error, results) => {
         if (error) {
             console.error("SQL-fejl:", error);
             return res.status(500).send("Databasefejl");
         }
-
         res.json(results);
     });
 });
+
 
 
 
