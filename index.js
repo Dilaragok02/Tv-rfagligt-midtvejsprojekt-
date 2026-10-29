@@ -205,6 +205,51 @@ app.get('/trainers/:id/pokemon', (req, res) => {
     });
 });
 
+app.post("/trainer/new/", (req, res) => {
+    const name = req.body.name
+    const hometown = req.body.hometown
+    const age = req.body.age
+
+    connection.query(
+        "INSERT INTO trainer (trainer_name, hometown, age) VALUES (?, ?, ?)",
+        [name, hometown, age],
+        (error, results) => {
+            res.send("Trainer created");
+        }
+    );
+});
+
+
+    // 4. POST: Tilføj en eksisterende Pokémon til en træner (i bindingstabellen)
+     app.post("/trainer/catch/", (req, res) => {
+         const trainer_id = req.body.trainer_id;
+         const pokedex_number = req.body.pokedex_number;
+
+         connection.query(
+             "INSERT INTO trainer_pokemon (trainer_id, pokedex_number) VALUES (?, ?)",
+             [trainer_id, pokedex_number],
+             (error, results) => {
+                 res.send("Pokemon was caught");
+             }
+         );
+     });
+
+
+
+
+
+
+
+
+
+    // Start serveren
+    app.listen(3000, () => {
+        console.log(`Serveren kører! Gå til http://localhost:3000}`);
+});
+
+
+
+
 
 
 
