@@ -13,6 +13,7 @@ console.log("DBUSER:", process.env.DBUSER);
 console.log("DBDATABASE:", process.env.DBDATABASE);
 
 const app = express();
+app.use(express.json());
 
 const port = 3000;
 
@@ -147,13 +148,20 @@ app.get('/trainers/:id/pokemon', (req, res) => {
         if (error) {
             console.error("SQL-fejl:", error);
             return res.status(500).json({
-                error: "database"
+                error: "Error"
             });
         }
 
         res.json(results);
     });
 });
+
+
+
+
+
+
+
 
 
 // Dashboard Get - Post
