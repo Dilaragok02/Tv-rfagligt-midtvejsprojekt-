@@ -1,6 +1,7 @@
 let selectedTrainerId = null;
 let allTrainersData = [];
 
+
 // /1. GET & UPDATE: Indlæs og opdater dashboardet samt dropdowns
 async function loadTrainersSystem() {
     try {
@@ -37,7 +38,11 @@ async function loadTrainersSystem() {
 
             row.innerHTML = `
                 <div class="trainer-info">
-                    <div style="font-size: 24px;">👤</div>
+                   <img
+    class="trainer-avatar"
+    src="images/trainers/${trainer.name.toLowerCase()}.png"
+    alt="${trainer.name}"
+>
                     <div class="trainer-name">${trainer.name}</div>
                 </div>
                 <div class="pokemon-badge">${count} Pokémon</div>
@@ -100,13 +105,14 @@ async function selectTrainer(id, name) {
             const formattedId = String(p.id).padStart(3, '0');
 
             // RETTET: Korrekt URL til det officielle PokéAPI Pokémon artwork
-            const imageUrl = `https://githubusercontent.com{p.id}.png`;
+            const imageUrl =
+                `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${p.id}.png`;
 
             card.innerHTML = `
-                <img src="${imageUrl}" onerror="this.src='https://githubusercontent.com{p.id}.png'" alt="${p.name}">
-                <div class="pokemon-display-name">${p.name}</div>
-                <div class="pokemon-display-number">#${formattedId}</div>
-            `;
+    <img src="${imageUrl}" alt="${p.name}">
+    <div class="pokemon-display-name">${p.name}</div>
+    <div class="pokemon-display-number">#${formattedId}</div>
+`;
             cardsContainer.appendChild(card);
         });
     } catch (err) {

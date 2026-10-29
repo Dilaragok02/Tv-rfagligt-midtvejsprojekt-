@@ -517,7 +517,9 @@
 
 /* ===== TRAINERS PAGE ===== */
 
-.trainers-page {
+
+
+.trainer-page {
     min-height: 100vh;
     padding: 40px 24px;
     background: #f3f8fd;
@@ -532,11 +534,11 @@
 
 /* ===== HEADER ===== */
 
-.trainers-header {
+.trainer-header {
     margin-bottom: 22px;
 }
 
-.trainers-header h1 {
+.trainer-header h1 {
     font-size: 38px;
     font-weight: 700;
     margin: 0 0 8px;
