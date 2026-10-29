@@ -122,7 +122,7 @@ app.get('/trainers',(req,res)=> {
         (error, results)=> {
                if (error) {
                    return res.status(500).json({
-                       error: "Databasefejl"
+                       error: "error"
                    });
                }
 
@@ -140,8 +140,7 @@ app.get('/trainers/:id/pokemon', (req, res) => {
     FROM pokemon.pokemon p
     JOIN pokemon.trainer_pokemon tp
         ON p.pokedex_number = tp.pokedex_number
-    WHERE tp.trainer_id = ?
-`;
+    WHERE tp.trainer_id = ?`;
 
 
     connection.query(sql, [trainerId], (error, results) => {
