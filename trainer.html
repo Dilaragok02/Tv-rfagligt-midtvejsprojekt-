@@ -1,12 +1,105 @@
 <!doctype html>
-<html lang="en">
+<html lang="da">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Document</title>
+    <title>PokéDex - Trainers</title>
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
 
+<!-- Topbar Navigation (Nu forbundet til dine andre filer) -->
+<div class="navbar">
+    <a href="dashboard.html" class="navbar-brand">PokéDex</a>
+    <div class="navbar-nav">
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+        <a href="pokemon.html" class="nav-link">Pokémon</a>
+        <a href="trainer.html" class="nav-link active">Trainers</a>
+    </div>
+</div>
+
+<!-- Main Content Container -->
+<div class="main-container">
+    <h1>Trainers</h1>
+    <p class="subtitle">Udforsk trænere og deres Pokémon.</p>
+
+    <!-- STATS CARDS -->
+    <div class="stats-grid">
+        <div class="stats-card">
+            <div>
+                <div class="stats-label">Antal trænere</div>
+                <div class="stats-value" id="statTrainersCount">0</div>
+            </div>
+        </div>
+        <div class="stats-card">
+            <div>
+                <div class="stats-label">Pokémon samlet</div>
+                <div class="stats-value" id="statPokemonCount">0</div>
+            </div>
+        </div>
+        <div class="stats-card">
+            <div>
+                <div class="stats-label">Største samling</div>
+                <div class="stats-value" id="statTopTrainer">--</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN INTERFACE: LISTS & CARDS -->
+    <div class="content-grid">
+        <!-- Venstre panel: Alle Trainers -->
+        <div class="panel">
+            <h2>Alle Trainers</h2>
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="trainerSearch" placeholder="Søg efter en trainer...">
+            </div>
+            <div class="trainer-list" id="trainerListContainer">
+                <!-- Hentes dynamisk via GET /api/trainers -->
+            </div>
+        </div>
+
+        <!-- Højre panel: Holdoversigt -->
+        <div class="panel">
+            <h2><span id="selectedTrainerTitle">Vælg en Trainer</span>s Pokémon</h2>
+            <p class="panel-subtitle">Pokémon ejet af denne trainer.</p>
+            <div class="pokemon-cards-grid" id="pokemonCardsContainer">
+                <p class="empty-state">Klik på en træner til venstre for at se deres hold.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- BUNDPANEL: FORMULARER (POST) -->
+    <div class="forms-grid">
+        <!-- Opret ny træner -->
+        <div class="panel">
+            <h2>Opret ny trainer</h2>
+            <form id="createTrainerForm">
+                <input type="text" id="newTrainerName" placeholder="Trænerens navn" required>
+                <button type="submit" class="btn btn-submit-red">Opret trainer</button>
+            </form>
+            <p class="footer-note">Data hentes og oprettes via vores eget API.</p>
+        </div>
+
+        <!-- Tilføj Pokémon til træner -->
+        <div class="panel">
+            <h2>Tilføj Pokémon til trainer</h2>
+            <form id="addPokemonForm">
+                <div style="display: flex; gap: 15px;">
+                    <select id="selectTrainerDropdown" required>
+                        <option value="" disabled selected>Vælg trainer</option>
+                    </select>
+                    <select id="selectPokemonDropdown" required>
+                        <option value="" disabled selected>Vælg Pokémon</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-submit-blue">Tilføj Pokémon</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Koblet til din trainer.js i bunden af body -->
+<script src="trainer.js"></script>
 </body>
 </html>
