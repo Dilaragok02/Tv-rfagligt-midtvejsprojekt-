@@ -13,6 +13,7 @@ console.log("DBUSER:", process.env.DBUSER);
 console.log("DBDATABASE:", process.env.DBDATABASE);
 
 const app = express();
+app.use(express.json());
 
 const port = 3000;
 
@@ -102,54 +103,6 @@ app.get('/pokemon/filter', (req, res) => {
 });
 // Trainer - Get og POST
 
-
-// Hent en træners Pokémon
-
-// Hent en træners Pokémon
-app.get('/trainers/:id/pokemon', (req, res) => {
-    const trainerId = req.params.id;-
-
-    const sql = `
-        SELECT pokemon.*
-        FROM pokemon
-        JOIN trainer_pokemon
-            ON pokemon.pokedex_number = trainer_pokemon.pokedex_number
-        WHERE trainer_pokemon.trainer_id = ?
-    `;
-
-    connection.query(sql, [trainerId], (err, results) => {
-        if (err) {
-            console.error("SQL-fejl:", err);
-
-            return res.status(500).json({
-                error: "Kunne ikke hente trænerens Pokémon"
-            });
-        }
-
-        res.json(results);
-    });
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //*Trainers
 
 app.get('pokemon/',(req, res) => {
@@ -204,7 +157,19 @@ app.get('/trainers/:id/pokemon', (req, res) => {
     });
 });
 
+app.post("/trainer/new/", (req, res) => {
+    const name = req.body.name
+    const hometown = req.body.hometown
+    const age = req.body.age
 
+    connection.query(
+        "INSERT INTO trainer (trainer_name, hometown, age) VALUES (?, ?, ?)",
+        [name, hometown, age],
+        (error, results) => {
+            res.send("Trainer created");
+        }
+    );
+});
 
 
 
