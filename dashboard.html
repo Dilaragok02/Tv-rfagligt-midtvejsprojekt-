@@ -1,12 +1,74 @@
-<!doctype html>
-<html lang="en">
+
+<!DOCTYPE html>
+<html lang="da">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pokédex - Dashboard</title>
+
     <link rel="stylesheet" href="main.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="dashboard.js" defer></script>
 </head>
-<body>
+
+<body class="dashboard-page">
+
+<header>
+    <h1>Pokemon</h1>
+
+    <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="pokemon.html">Pokémon</a>
+        <a href="trainer.html">Trainers</a>
+    </nav>
+</header>
+
+<main>
+    <h2>Dashboard</h2>
+    <p>Få et overblik over statistikker fra Pokémon-verdenen.</p>
+
+    <section class="dashboard-grid">
+
+       <!--- Pokemon fordelt efter type -->
+        <article class="statistik-kort">
+            <h3>Pokémon fordelt på type</h3>
+            <p>Hvor mange Pokémon findes der af hver type?</p>
+            <canvas id="typeChart"></canvas>
+        </article>
+
+        <!-- Pokemons gennemsnitlig attack -->
+        <article class="statistik-kort">
+            <h3>Gennemsnitlig attack pr. type</h3>
+            <p>Hvilken type har den højeste gennemsnitlige attack?</p>
+            <canvas id="attackChart"></canvas>
+        </article>
+
+        <!-- Trainers med flest Pokémon -->
+        <article class="statistik-kort">
+            <h3>Trainers med flest Pokémon</h3>
+            <p>Hvem har den største samling?</p>
+
+            <ol id="trainerList">
+                <li>Indlæser data...</li>
+            </ol>
+        </article>
+
+        <!-- Moves pr. pokemon -->
+        <article class="statistik-kort">
+            <h3>Antal moves per Pokémon</h3>
+            <p>Hvor mange moves er knyttet til hver Pokémon?</p>
+            <canvas id="movesPokemonChart"></canvas>
+        </article>
+
+
+
+    </section>
+
+    <!-- Hvis der er fejl i JS -->
+    <p id="status" role="status"></p>
+</main>
 
 </body>
 </html>

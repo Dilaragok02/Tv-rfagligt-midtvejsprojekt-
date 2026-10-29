@@ -133,19 +133,28 @@ app.get('/trainers',(req,res)=> {
 
 
 // Hent en trainers Pokemon
-// 2. GET: Hent Pokémon for en bestemt træner
-app.get('/api/trainers/pokemon', (req, res) => {
+app.get('/trainers/:id/pokemon', (req, res) => {
     const trainerId = req.params.id;
-    const sql = `SELECT pokemon.name FROM pokemon 
-        JOIN trainer_pokemon
-        ON pokemon.pokedex_number = trainer_pokemon.pokedex_number
-        WHERE trainer_pokemon.trainer_id = 1;`
+    const sql = `
+    SELECT p.*
+    FROM pokemon.pokemon p
+    JOIN pokemon.trainer_pokemon tp
+        ON p.pokedex_number = tp.pokedex_number
+    WHERE tp.trainer_id = ?
+`;
 
-        connection.query(sql, [trainerId], (error, results) => {
-            if (error) return res.status(500).json({ error: error.message });
-            res.json(results);
-        });
+
+    connection.query(sql, [trainerId], (error, results) => {
+        if (error) {
+            console.error("SQL-fejl:", error);
+            return res.status(500).json({
+                error: "Error"
+            });
+        }
+
+        res.json(results);
     });
+});
 
     // 3. POST: Opret en ny træner
 app.post("/trainer/new/", (req, res) => {
@@ -182,7 +191,7 @@ app.post("/trainer/new/", (req, res) => {
              }
          );
      });
-    
+
 
 
 
@@ -251,24 +260,22 @@ app.get('/dashboard/type-distribution', (req, res) => {
 
 
 app.get('/dashboard/most-trainers', (req, res) => {
-    const sql = `
-        SELECT trainer.trainer_id, trainer.trainer_name, COUNT(trainer_pokemon.pokedex_number) AS pokemon_count
+    const sql = `SELECT trainer.trainer_id,trainer.trainer_name, COUNT(trainer_pokemon.pokedex_number) AS pokemon_count
         FROM trainer
         ON trainer.trainer_id = trainer_pokemon.trainer_id
         GROUP BY trainer.trainer_id, trainer.trainer_name
         ORDER BY pokemon_count DESC
-        LIMIT 5
-    `;
+        LIMIT 5`;
 
     connection.query(sql, (error, results) => {
         if (error) {
             console.error("SQL-fejl:", error);
             return res.status(500).send("Databasefejl");
         }
+
         res.json(results);
     });
 });
-
 
 
 

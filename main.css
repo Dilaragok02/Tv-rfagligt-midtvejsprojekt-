@@ -1,0 +1,686 @@
+
+/* ==========================
+   POKÉMON - CSS
+   ========================== */
+
+.pokemon-page {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f3f6fa;
+    color: #243047;
+}
+
+.pokemon-page * {
+    box-sizing: border-box;
+}
+
+/* Overskrifter */
+
+.pokemon-page h1 {
+    font-size: 32px;
+    color: #243047;
+}
+
+.pokemon-page h2 {
+    font-size: 24px;
+}
+
+/* Header og navigation */
+
+.pokemon-page header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 40px;
+    background-color: white;
+    border-bottom: 1px solid #dce3ec;
+}
+
+.pokemon-page header h1 {
+    margin: 0;
+    color: #F4B8B8;
+    font-size: 26px;
+}
+
+.pokemon-page nav {
+    display: flex;
+    gap: 24px;
+}
+
+.pokemon-page nav a {
+    color: #34445e;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.pokemon-page nav a:hover {
+    color: #F4B8B8;
+}
+
+/* Hovedindhold */
+
+.pokemon-page main {
+    max-width: 1400px;
+    margin: 35px auto;
+    padding: 0 24px;
+}
+
+.pokemon-page main > p {
+    color: #64748b;
+}
+
+/* Filterområdet */
+
+.pokemon-page .filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: 18px;
+    padding: 25px;
+    margin: 25px 0;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(30, 50, 80, 0.05);
+}
+
+.pokemon-page .filter-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 170px;
+    gap: 10px;
+}
+
+.pokemon-page label {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.pokemon-page input,
+.pokemon-page select {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #dce3ec;
+    border-radius: 8px;
+    background-color: white;
+    color: #243047;
+    font-size: 14px;
+}
+
+/* Knapper */
+
+.pokemon-page button {
+    padding: 13px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.pokemon-page #filterButton {
+    background-color: #dceaff;
+    color: #2563b8;
+}
+
+.pokemon-page #resetButton {
+    background-color: #ffe2e9;
+    color: #dc6d8e;
+}
+
+.pokemon-page button:hover {
+    filter: brightness(0.95);
+}
+
+/* Pokémon-kort */
+
+.pokemon-page .pokemon-card {
+    padding: 20px;
+    border: 1px solid #e0e6ef;
+    border-radius: 12px;
+    background-color: #f8faff;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.pokemon-page .pokemon-card:hover {
+    background-color: #eef4ff;
+    transform: translateY(-3px);
+}
+
+.pokemon-page .pokemon-card h2 {
+    margin-top: 0;
+    font-size: 20px;
+}
+
+.pokemon-page .pokemon-card p {
+    color: #64748b;
+}
+
+/* Detaljevisning */
+
+.pokemon-page #pokemonDetails:not(:empty) {
+    margin-top: 25px;
+    padding: 25px;
+    background-color: white;
+    border: 1px solid #e0e6ef;
+    border-radius: 12px;
+}
+
+.pokemon-page #pokemonDetails button {
+    background-color: #ffe2e9;
+    color: #dc6d8e;
+}
+
+/* Mobilvenligt design */
+
+@media (max-width: 700px) {
+    .pokemon-page header {
+        flex-direction: column;
+        gap: 16px;
+        padding: 18px;
+    }
+
+    .pokemon-page nav {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .pokemon-page main {
+        padding: 0 14px;
+    }
+
+    .pokemon-page .filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .pokemon-page .filter-group {
+        width: 100%;
+    }
+
+    .pokemon-page #pokemonList {
+        grid-template-columns: 1fr;
+    }
+}
+/* Pokémon tabel */
+
+.pokemon-page .pokemon-table-section {
+    background-color: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin-top: 20px;
+}
+
+.pokemon-page .table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.pokemon-page .pokemon-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.pokemon-page .pokemon-table th {
+    background-color: #eaf0f8;
+    padding: 16px 12px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.pokemon-page .pokemon-table td {
+    padding: 14px 12px;
+    border-bottom: 1px solid #edf0f5;
+    white-space: nowrap;
+}
+
+.pokemon-page .pokemon-table tbody tr:hover {
+    background-color: #f8faff;
+}
+
+/* Pokémon typer farver*/
+
+.pokemon-page .type-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    margin-right: 6px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.pokemon-page .grass {
+    background-color: #d9f8e5;
+    color: #21834a;
+}
+
+.pokemon-page .poison {
+    background-color: #eedcff;
+    color: #8644c0;
+}
+
+.pokemon-page .fire {
+    background-color: #fce0e7;
+    color: #c43e59;
+}
+
+.pokemon-page .water {
+    background-color: #dceaff;
+    color: #2563b8;
+}
+
+.pokemon-page .electric {
+    background-color: #fff2c9;
+    color: #a47700;
+}
+
+.pokemon-page .flying {
+    background-color: #dceaff;
+    color: #4775b5;
+}
+.pokemon-page .normal {
+    background-color: #ececf1;
+    color: #606477;
+}
+
+.pokemon-page .bug {
+    background-color: #eaf2d5;
+    color: #68843b;
+}
+
+.pokemon-page .ground {
+    background-color: #f3e8d9;
+    color: #956a3c;
+}
+
+.pokemon-page .fairy {
+    background-color: #fbe2f1;
+    color: #b05b92;
+}
+
+.pokemon-page .fighting {
+    background-color: #f8ded9;
+    color: #ad594c;
+}
+
+.pokemon-page .psychic {
+    background-color: #ffe2f0;
+    color: #bb4e89;
+}
+
+.pokemon-page .rock {
+    background-color: #e9e5df;
+    color: #766a58;
+}
+
+.pokemon-page .ghost {
+    background-color: #e7e2f7;
+    color: #7660a6;
+}
+
+.pokemon-page .ice {
+    background-color: #dcf5f8;
+    color: #287f91;
+}
+
+.pokemon-page .steel {
+    background-color: #e3edf1;
+    color: #587887;
+}
+
+.pokemon-page .dragon {
+    background-color: #e2e2ff;
+    color: #5754b3;
+}
+
+.pokemon-page .dark {
+    background-color: #e6e4e9;
+    color: #5d5367;
+}
+
+/* Pokémon billeder og navne */
+
+.pokemon-page .pokemon-name-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.pokemon-page .pokemon-image {
+    width: 55px;
+    height: 55px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.pokemon-page .pokemon-name {
+    font-weight: bold;
+    color: #243047;
+}
+
+/* Pokémon detaljer-knapper */
+
+.pokemon-page .details-button {
+    background-color: #f1f6ff;
+    color: #3474c8;
+    border: 1px solid #a9c9f5;
+    border-radius: 9px;
+    padding: 10px 18px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.pokemon-page .details-button:hover {
+    background-color: #dceaff;
+}
+
+
+/* Pokémon detaljevisning */
+
+.pokemon-page .pokemon-detail-row td {
+    padding: 20px;
+    background-color: #f8faff;
+    white-space: normal;
+}
+
+.pokemon-page .pokemon-detail-box {
+    padding: 25px;
+    background-color: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+}
+
+.pokemon-page .pokemon-detail-box h2 {
+    color: #243047;
+    font-size: 24px;
+    margin: 0 0 15px;
+}
+
+.pokemon-page .pokemon-detail-types {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 25px;
+}
+
+.pokemon-page .pokemon-detail-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.pokemon-page .pokemon-stat-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 18px;
+    background-color: #f3f6fa;
+    border-radius: 10px;
+}
+
+.pokemon-page .pokemon-stat-box span {
+    color: #64748b;
+    font-size: 14px;
+}
+
+.pokemon-page .pokemon-stat-box strong {
+    color: #243047;
+    font-size: 22px;
+}
+
+.pokemon-page .pokemon-detail-close {
+    display: block;
+    margin-left: auto;
+    padding: 12px 25px;
+    background-color: #fce3eb;
+    color: #c65b7d;
+    border: none;
+    border-radius: 9px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.pokemon-page .pokemon-detail-close:hover {
+    background-color: #f8d3df;
+}
+
+@media (max-width: 700px) {
+    .pokemon-page .pokemon-detail-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+/* RESPONSIVT DESIGN - POKÉMON */
+
+@media (max-width: 1100px) {
+
+    .pokemon-page .filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .pokemon-page .filter-group {
+        flex: 1 1 200px;
+        min-width: 0;
+    }
+
+    .pokemon-page .table-wrapper {
+        overflow-x: auto;
+    }
+
+    .pokemon-page .pokemon-table {
+        min-width: 950px;
+    }
+}
+
+@media (max-width: 700px) {
+
+    .pokemon-page main {
+        padding: 15px;
+    }
+
+    .pokemon-page .filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .pokemon-page .filter-group {
+        flex: 0 1 auto;
+        width: 100%;
+    }
+
+    .pokemon-page .filter-group input,
+    .pokemon-page .filter-group select {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .pokemon-page .pokemon-table-section {
+        padding: 12px;
+    }
+
+    .pokemon-page .pokemon-detail-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .pokemon-page .pagination {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+
+
+
+
+/* Dashboard - CSS */
+
+.dashboard-page {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f3f6fa;
+    color: #243047;
+}
+
+.dashboard-page * {
+    box-sizing: border-box;
+}
+
+/* Header og Nav */
+
+.dashboard-page header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 40px;
+    background-color: white;
+    border-bottom: 1px solid #dce3ec;
+}
+
+.dashboard-page header h1 {
+    margin: 0;
+    color: #F4B8B8;
+    font-size: 26px;
+}
+
+.dashboard-page nav {
+    display: flex;
+    gap: 24px;
+}
+
+.dashboard-page nav a {
+    color: #34445e;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.dashboard-page nav a:hover {
+    color: #F4B8B8;
+}
+
+/* Indhold til Dashboard */
+
+.dashboard-page main {
+    max-width: 1200px;
+    margin: 35px auto;
+    padding: 0 24px;
+}
+
+.dashboard-page main > h2 {
+    margin-bottom: 8px;
+    font-size: 32px;
+}
+
+.dashboard-page main > p {
+    color: #64748b;
+    line-height: 1.5;
+}
+
+/* Selve statisikerne (Border osv.) */
+
+.dashboard-page .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+    margin-top: 28px;
+}
+
+.dashboard-page .statistik-kort {
+    min-width: 0;
+    padding: 22px;
+    background-color: white;
+    border: 1px solid #e0e6ef;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(30, 50, 80, 0.05);
+}
+
+.dashboard-page .statistik-kort h3 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 19px;
+}
+
+.dashboard-page .statistik-kort p {
+    margin-top: 0;
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Diagrammer */
+.dashboard-page .statistik-kort canvas {
+    display: block;
+    width: 100%;
+    max-height: 300px;
+}
+.dashboard-page .statistik-kort canvas {
+    display: block;
+    width: 100%;
+    max-height: 300px;
+    min-height: 220px;
+}
+
+
+/* Liste over trainers */
+
+.dashboard-page #trainerList {
+    padding-left: 25px;
+    margin-bottom: 0;
+}
+
+.dashboard-page #trainerList li {
+    padding: 12px 4px;
+    border-bottom: 1px solid #e8edf3;
+    line-height: 1.5;
+}
+
+.dashboard-page #trainerList li:last-child {
+    border-bottom: none;
+}
+
+/* Fejlbeskeder */
+
+.dashboard-page #status {
+    margin-top: 20px;
+    color: #F4B8B8;
+    font-weight: bold;
+}
+
+/* Tilpasning til telefonen */
+
+@media (max-width: 700px) {
+    .dashboard-page header {
+        flex-direction: column;
+        gap: 16px;
+        padding: 18px;
+    }
+
+    .dashboard-page nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px;
+    }
+
+    .dashboard-page main {
+        margin-top: 24px;
+        padding: 0 14px;
+    }
+
+    .dashboard-page main > h2 {
+        font-size: 27px;
+    }
+
+    .dashboard-page .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .dashboard-page .statistik-kort {
+        padding: 16px;
+    }
+}
+
