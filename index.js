@@ -13,6 +13,7 @@ console.log("DBUSER:", process.env.DBUSER);
 console.log("DBDATABASE:", process.env.DBDATABASE);
 
 const app = express();
+app.use(express.json());
 
 const port = 3000;
 

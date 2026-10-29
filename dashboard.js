@@ -14,7 +14,7 @@ async function hentData(endpoint) {
 
 // 1 Diagram - Antal Pokémon fordelt på type
 async function visTypeDiagram() {
-    const data = await hentData("/dashboard/type-distribution");-
+    const data = await hentData("/dashboard/type-distribution");
 
     new Chart(document.getElementById("typeChart"), {
         type: "bar",
