@@ -95,13 +95,12 @@ app.get('/pokemon/filter', (req, res) => {
 
     connection.query(sql, values, (error, results) => {
         if (error) {
-            return res.status(500).send("Error");
+            return res.status(500).send("Databasefejl");
         }
 
         res.json(results);
     });
 });
-// Trainer - Get og POST
 
 //*Trainers
 
@@ -249,7 +248,7 @@ app.get('/dashboard/type-distribution', (req, res) => {
     connection.query(sql, (error, results) => {
         if (error) {
             console.error("SQL-fejl:", error);
-            return res.status(500).send("Kend din pokemons bedre");
+            return res.status(500).send("error");
         }
 
         res.json(results);
@@ -263,7 +262,6 @@ app.get('/dashboard/type-distribution', (req, res) => {
 app.get('/dashboard/most-trainers', (req, res) => {
     const sql = `SELECT trainer.trainer_id,trainer.trainer_name, COUNT(trainer_pokemon.pokedex_number) AS pokemon_count
         FROM trainer
-            JOIN trainer_pokemon
         ON trainer.trainer_id = trainer_pokemon.trainer_id
         GROUP BY trainer.trainer_id, trainer.trainer_name
         ORDER BY pokemon_count DESC
@@ -272,7 +270,7 @@ app.get('/dashboard/most-trainers', (req, res) => {
     connection.query(sql, (error, results) => {
         if (error) {
             console.error("SQL-fejl:", error);
-            return res.status(500).send("Du har fanget 0 pokemon");
+            return res.status(500).send("Databasefejl");
         }
 
         res.json(results);
@@ -281,31 +279,6 @@ app.get('/dashboard/most-trainers', (req, res) => {
 
 
 
-/* Antal moves pr. Pokemon */
-
-app.get('/dashboard/moves-per-pokemon', (req, res) => {
-    const sql = `SELECT pokemon.pokedex_number,pokemon.name AS pokemon_name,COUNT(pokemon_has_moves.move_id) AS move_count
-        FROM pokemon
-            JOIN pokemon_has_moves
-            ON pokemon.pokedex_number = pokemon_has_moves.pokedex_number
-        GROUP BY pokemon.pokedex_number, pokemon.name
-        HAVING COUNT(pokemon_has_moves.move_id) > 0
-        ORDER BY move_count DESC, pokemon.name ASC
-    `;
-
-    connection.query(sql, (error, results) => {
-        if (error) {
-            console.error("SQL-fejl i moves-per-pokemon:", error);
-            return res.status(500).json({
-                error: "Kunne ikke hente antal moves per Pokémon"
-            });
-        }
-
-        res.json(results);
-    });
-});
-
-
-    app.listen(port, () =>{
+app.listen(port, () =>{
     console.log(`Application is now running on port ${port}`);
 });
