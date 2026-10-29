@@ -147,20 +147,13 @@ app.get('/trainers/:id/pokemon', (req, res) => {
         if (error) {
             console.error("SQL-fejl:", error);
             return res.status(500).json({
-                error: "Error"
+                error: "database"
             });
         }
 
         res.json(results);
     });
 });
-
-
-
-
-
-
-
 
 
 // Dashboard Get - Post
