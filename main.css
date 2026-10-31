@@ -518,375 +518,389 @@
 /* ===== TRAINERS PAGE ===== */
 
 
-
-.trainer-page {
-    min-height: 100vh;
-    padding: 40px 24px;
-    background: #f3f8fd;
-    color: #10264b;
+.trainers-page {
+    background: #f3f6fa;
+    color: #102449;
     font-family: Arial, sans-serif;
+    min-height: 100vh;
 }
 
-.trainers-container {
+/* Hovedindhold */
+.trainers-page .main-container {
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 40px auto;
+    padding: 0 20px;
 }
 
-/* ===== HEADER ===== */
-
-.trainer-header {
-    margin-bottom: 22px;
-}
-
-.trainer-header h1 {
-    font-size: 38px;
-    font-weight: 700;
+.trainers-page .main-container > h1 {
+    font-size: 36px;
     margin: 0 0 8px;
-    color: #10264b;
+    color: #102449;
 }
 
-.trainers-header p {
+.trainers-page .subtitle {
+    color: #637a9c;
     font-size: 17px;
-    color: #607797;
-    margin: 0;
+    margin: 0 0 22px;
 }
 
-/* ===== STATISTICS ===== */
+/* =========================================
+   STATISTIK
+========================================= */
 
-.trainer-stats {
+.trainers-page .stats-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 16px;
     margin-bottom: 24px;
 }
 
-.trainer-stat-card {
+.trainers-page .stats-card {
     background: white;
-    border: 1px solid #dce8f5;
-    border-radius: 11px;
-    padding: 20px;
+    border: 1px solid #dce6f1;
+    border-radius: 12px;
+    padding: 22px;
+    min-height: 105px;
     display: flex;
     align-items: center;
-    gap: 25px;
-    box-shadow: 0 4px 15px rgba(30, 60, 100, 0.05);
+    box-shadow: 0 4px 15px rgba(20, 45, 80, 0.04);
 }
 
-.trainer-stat-icon {
-    width: 66px;
-    height: 66px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 28px;
-    flex-shrink: 0;
-}
-
-.trainer-stat-icon.blue {
-    background: #e8f7fc;
-    color: #329ed0;
-}
-
-.trainer-stat-icon.red {
-    background: #ffebec;
-    color: #f45d65;
-}
-
-.trainer-stat-icon.green {
-    background: #e5f5ef;
-    color: #198f80;
-}
-
-.trainer-stat-info p {
-    color: #607797;
-    margin: 0 0 5px;
-    font-size: 16px;
-}
-
-.trainer-stat-info h2 {
-    font-size: 30px;
-    margin: 0;
-    color: #10264b;
-}
-
-.trainer-stat-info span {
-    color: #607797;
+.trainers-page .stats-label {
+    color: #637a9c;
     font-size: 15px;
+    margin-bottom: 6px;
 }
 
-/* ===== MAIN LAYOUT ===== */
+.trainers-page .stats-value {
+    color: #102449;
+    font-size: 28px;
+    font-weight: bold;
+}
 
-.trainers-content {
+/* =========================================
+   PANELER OG LAYOUT
+========================================= */
+
+.trainers-page .content-grid,
+.trainers-page .forms-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 16px;
     margin-bottom: 24px;
 }
 
-.trainer-panel {
+.trainers-page .panel {
     background: white;
-    border: 1px solid #dce8f5;
-    border-radius: 11px;
+    border: 1px solid #dce6f1;
+    border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 4px 15px rgba(30, 60, 100, 0.05);
+    min-width: 0;
+    box-shadow: 0 4px 15px rgba(20, 45, 80, 0.04);
 }
 
-.trainer-panel h2 {
-    font-size: 23px;
-    color: #10264b;
-    margin: 0 0 12px;
+.trainers-page .panel h2 {
+    font-size: 21px;
+    color: #102449;
+    margin: 0 0 14px;
 }
 
-.trainer-panel p {
-    color: #607797;
-    margin: 0 0 18px;
+.trainers-page .panel-subtitle {
+    color: #637a9c;
+    margin: -5px 0 18px;
 }
 
-/* ===== SEARCH ===== */
+/* =========================================
+   SØGEFELT
+========================================= */
 
-.trainer-search {
+.trainers-page .search-container {
+    position: relative;
+    margin-bottom: 14px;
+}
+
+.trainers-page .search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    pointer-events: none;
+}
+
+.trainers-page #trainerSearch {
     width: 100%;
-    padding: 13px 15px;
-    border: 1px solid #cbdced;
+    padding: 13px 15px 13px 45px;
+    border: 1px solid #cddcec;
     border-radius: 8px;
     font-size: 14px;
-    margin-bottom: 14px;
-    outline: none;
     box-sizing: border-box;
 }
 
-.trainer-search:focus {
-    border-color: #7acfe1;
-    box-shadow: 0 0 0 3px rgba(122, 207, 225, 0.15);
-}
+/* =========================================
+   TRAINER LISTE
+========================================= */
 
-/* ===== TRAINER LIST ===== */
-
-.trainer-list {
+.trainers-page .trainer-list {
     display: flex;
     flex-direction: column;
 }
 
-.trainer-list-item {
+.trainers-page .trainer-row {
     display: flex;
     align-items: center;
-    gap: 18px;
-    padding: 6px 10px;
-    min-height: 66px;
-    border-bottom: 1px solid #e1ebf5;
-    cursor: pointer;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px;
+    border-bottom: 1px solid #e2eaf3;
     border-radius: 8px;
-    transition: background 0.2s ease;
+    cursor: pointer;
+    transition: background 0.2s;
 }
 
-.trainer-list-item:hover {
-    background: #f0f9fc;
+.trainers-page .trainer-row:hover,
+.trainers-page .trainer-row.selected {
+    background: #e5f6fc;
 }
 
-.trainer-list-item.active {
-    background: #e5f7fc;
+.trainers-page .trainer-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    min-width: 0;
 }
 
-.trainer-avatar {
-    width: 55px;
-    height: 55px;
-    object-fit: contain;
+.trainers-page .trainer-avatar {
+    width: 54px;
+    height: 54px;
     border-radius: 50%;
-    background: #e6f6fc;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: #e9f4fb;
 }
 
-.trainer-name {
-    font-size: 16px;
-    font-weight: 700;
-    color: #10264b;
+.trainers-page .trainer-name {
+    font-size: 15px;
+    font-weight: bold;
+    color: #102449;
 }
 
-.trainer-count {
-    margin-left: auto;
-    padding: 7px 15px;
-    border-radius: 25px;
-    background: #d9f3fb;
-    color: #174a70;
-    font-size: 14px;
+.trainers-page .pokemon-badge {
+    background: #d9f4fc;
+    color: #164b72;
+    padding: 7px 14px;
+    border-radius: 20px;
+    font-size: 13px;
     white-space: nowrap;
 }
 
-.trainer-count.red {
-    background: #ffe5e8;
-    color: #ad2637;
-}
+/* =========================================
+   POKÉMON KORT
+========================================= */
 
-/* ===== POKEMON GRID ===== */
-
-.trainer-pokemon-grid {
+.trainers-page .pokemon-cards-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 14px;
 }
 
-.trainer-pokemon-card {
-    border: 1px solid #dce8f5;
+.trainers-page .pokemon-display-card {
+    border: 1px solid #dce6f1;
     border-radius: 8px;
-    padding: 12px 8px;
+    padding: 15px 8px;
+    background: white;
     text-align: center;
-    background: white;
-    transition: transform 0.2s ease,
-    box-shadow 0.2s ease;
+    min-width: 0;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.trainer-pokemon-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 18px rgba(30, 60, 100, 0.12);
+.trainers-page .pokemon-display-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 14px rgba(20, 45, 80, 0.09);
 }
 
-.trainer-pokemon-card img {
+.trainers-page .pokemon-display-card img {
     width: 100%;
-    height: 100px;
+    max-width: 110px;
+    height: 110px;
     object-fit: contain;
-    margin-bottom: 8px;
 }
 
-.trainer-pokemon-card h3 {
+.trainers-page .pokemon-display-name {
+    color: #102449;
     font-size: 14px;
-    color: #10264b;
-    margin: 0 0 5px;
+    font-weight: bold;
+    margin-top: 8px;
 }
 
-.trainer-pokemon-card p {
-    font-size: 14px;
-    color: #607797;
-    margin: 0;
+.trainers-page .pokemon-display-number {
+    color: #637a9c;
+    font-size: 13px;
+    margin-top: 5px;
 }
 
-/* ===== FORMS ===== */
-
-.trainers-forms {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
+.trainers-page .empty-state {
+    grid-column: 1 / -1;
+    color: #637a9c;
+    padding: 20px 0;
 }
 
-.trainer-form-card {
-    background: white;
-    border: 1px solid #dce8f5;
-    border-radius: 11px;
-    padding: 20px;
-    box-shadow: 0 4px 15px rgba(30, 60, 100, 0.05);
+/* =========================================
+   FORMULARER
+========================================= */
+
+.trainers-page .panel form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
-.trainer-form-card h2 {
-    font-size: 20px;
-    margin: 0 0 14px;
-    color: #10264b;
-}
-
-.trainer-form-card input,
-.trainer-form-card select {
+.trainers-page #newTrainerName,
+.trainers-page #selectTrainerDropdown,
+.trainers-page #selectPokemonDropdown {
     width: 100%;
+    min-width: 0;
     padding: 13px 15px;
-    border: 1px solid #cbdced;
+    border: 1px solid #cddcec;
     border-radius: 8px;
-    font-size: 14px;
     background: white;
-    box-sizing: border-box;
-    outline: none;
-}
-
-.trainer-form-card input:focus,
-.trainer-form-card select:focus {
-    border-color: #7acfe1;
-}
-
-.trainer-select-row {
-    display: grid;
-    grid-template-columns: 1fr 1.8fr;
-    gap: 10px;
-}
-
-/* ===== BUTTONS ===== */
-
-.trainer-btn {
-    width: 100%;
-    padding: 14px;
-    border: none;
-    border-radius: 7px;
-    color: white;
+    color: #102449;
     font-size: 14px;
-    font-weight: 700;
+    box-sizing: border-box;
+}
+
+.trainers-page #trainerSearch:focus,
+.trainers-page #newTrainerName:focus,
+.trainers-page select:focus {
+    outline: none;
+    border-color: #7ed0e2;
+    box-shadow: 0 0 0 3px rgba(126, 208, 226, 0.15);
+}
+
+/* Knapper */
+.trainers-page .btn {
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    padding: 14px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
     cursor: pointer;
-    margin-top: 12px;
-    transition: opacity 0.2s ease,
-    transform 0.2s ease;
+    transition: filter 0.2s;
 }
 
-.trainer-btn:hover {
-    opacity: 0.9;
-    transform: translateY(-2px);
+.trainers-page .btn-submit-red {
+    background: #ff8991;
 }
 
-.trainer-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none;
+.trainers-page .btn-submit-blue {
+    background: #7ed0e2;
 }
 
-.trainer-btn-pink {
-    background: #ff858c;
+.trainers-page .btn:hover {
+    filter: brightness(0.95);
 }
 
-.trainer-btn-blue {
-    background: #79cfe0;
-}
-
-/* ===== FOOTER ===== */
-
-.trainers-footer {
+.trainers-page .footer-note {
+    color: #637a9c;
     font-size: 12px;
-    color: #7a8ca7;
-    margin-top: 12px;
+    margin: 12px 0 0;
 }
 
-/* ===== RESPONSIVE ===== */
+/* =========================================
+   RESPONSIVT DESIGN
+========================================= */
 
 @media (max-width: 900px) {
-    .trainer-stats {
+    .trainers-page .stats-grid {
         grid-template-columns: 1fr;
     }
 
-    .trainers-content,
-    .trainers-forms {
+    .trainers-page .content-grid,
+    .trainers-page .forms-grid {
         grid-template-columns: 1fr;
     }
 }
 
-@media (max-width: 600px) {
-    .trainers-page {
-        padding: 24px 15px;
+@media (max-width: 550px) {
+    .trainers-page .main-container {
+        padding: 0 12px;
+        margin: 25px auto;
     }
 
-    .trainers-header h1 {
-        font-size: 30px;
+    .trainers-page .main-container > h1 {
+        font-size: 28px;
     }
 
-    .trainer-pokemon-grid {
-        grid-template-columns: repeat(2, 1fr);
+    .trainers-page .panel {
+        padding: 15px;
     }
 
-    .trainer-select-row {
+    .trainers-page .pokemon-cards-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .trainers-page .stats-card {
+        padding: 16px;
+    }
+
+    .trainers-page .trainer-avatar {
+        width: 44px;
+        height: 44px;
+    }
+
+    .trainers-page .pokemon-badge {
+        padding: 6px 9px;
+        font-size: 12px;
+    }
+}
+.trainers-page .trainer-select-row {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 12px;
+}
+
+@media (max-width: 550px) {
+    .trainers-page .trainer-select-row {
         grid-template-columns: 1fr;
-    }
-
-    .trainer-stat-card {
-        padding: 15px;
-    }
-
-    .trainer-panel,
-    .trainer-form-card {
-        padding: 15px;
     }
 }
 
+/* Navigation på Trainers-siden */
 
+.trainers-page .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    padding: 20px 45px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.trainers-page .navbar-brand {
+    color: #e8b4b4;
+    font-size: 28px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.trainers-page .navbar-nav {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.trainers-page .nav-link {
+    color: #243451;
+    font-size: 17px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.trainers-page .nav-link:hover {
+    color: #e8b4b4;
+}
 
 
 /* Dashboard - CSS */

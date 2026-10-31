@@ -13,6 +13,11 @@ console.log("DBUSER:", process.env.DBUSER);
 console.log("DBDATABASE:", process.env.DBDATABASE);
 
 const app = express();
+
+app.get('/test', (req, res) => {
+    res.send("DET ER DEN RIGTIGE BACKEND");
+});
+
 app.use(express.json());
 
 const port = 3000;
@@ -101,12 +106,28 @@ app.get('/pokemon/filter', (req, res) => {
         res.json(results);
     });
 });
-// Trainer - Get og POST
+
+//Trainer
+
+// 1. Hent alle trainers
+app.get('/trainers', (req, res) => {
+    connection.query(
+        'SELECT * FROM trainer',
+        (error, results) => {
+            if (error) {
+                console.error("Databasefejl:", error);
+                return res.status(500).json({
+                    error: "Kunne ikke hente trainers"
+                });
+            }
+
+            res.json(results);
+        }
+    );
+});
 
 
-// Hent en træners Pokémon
-
-// Hent en træners Pokémon
+// 2. Hent en bestemt trainers Pokémon
 app.get('/trainers/:id/pokemon', (req, res) => {
     const trainerId = req.params.id;
 
@@ -118,86 +139,11 @@ app.get('/trainers/:id/pokemon', (req, res) => {
         WHERE trainer_pokemon.trainer_id = ?
     `;
 
-    connection.query(sql, [trainerId], (err, results) => {
-        if (err) {
-            console.error("SQL-fejl:", err);
-
-            return res.status(500).json({
-                error: "Kunne ikke hente trænerens Pokémon"
-            });
-        }
-
-        res.json(results);
-    });
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//*Trainers
-
-app.get('pokemon/',(req, res) => {
-    connection.query('SELECT* FROM Trainers',(error,results) => {
-        if (error) {
-            return res.status(500).send("Databasefejl");
-        }
-
-        res.json(results);
-    });
-});
-
-//* Trainers
-// Hent alle trainers
-app.get('/trainers',(req,res)=> {
-    connection.query(
-        'SELECT* FROM trainer',
-        (error, results)=> {
-               if (error) {
-                   return res.status(500).json({
-                       error: "Databasefejl"
-                   });
-               }
-
-                   res.json(results);
-            }
-    );
-        });
-
-
-// Hent en trainers Pokemon
-app.get('/trainers/:id/pokemon', (req, res) => {
-    const trainerId = req.params.id;
-    const sql = `
-    SELECT p.*
-    FROM pokemon.pokemon p
-    JOIN pokemon.trainer_pokemon tp
-        ON p.pokedex_number = tp.pokedex_number
-    WHERE tp.trainer_id = ?
-`;
-
-
     connection.query(sql, [trainerId], (error, results) => {
         if (error) {
             console.error("SQL-fejl:", error);
             return res.status(500).json({
-                error: "Error"
+                error: "Kunne ikke hente trainerens Pokémon"
             });
         }
 
@@ -205,58 +151,67 @@ app.get('/trainers/:id/pokemon', (req, res) => {
     });
 });
 
-app.post("/trainer/new/", (req, res) => {
-    const name = req.body.name
-    const hometown = req.body.hometown
-    const age = req.body.age
+
+// 3. Opret en ny trainer
+app.post('/trainer/new/', (req, res) => {
+    const name = req.body.name;
+    const hometown = req.body.hometown ?? null;
+    const age = req.body.age ?? null;
+
+    if (!name || !name.trim()) {
+        return res.status(400).json({
+            error: "Trainerens navn mangler"
+        });
+    }
 
     connection.query(
-        "INSERT INTO trainer (trainer_name, hometown, age) VALUES (?, ?, ?)",
-        [name, hometown, age],
+        'INSERT INTO trainer (trainer_name, hometown, age) VALUES (?, ?, ?)',
+        [name.trim(), hometown, age],
         (error, results) => {
-            res.send("Trainer created");
+            if (error) {
+                console.error("SQL-fejl:", error);
+                return res.status(500).json({
+                    error: "Kunne ikke oprette trainer"
+                });
+            }
+
+            res.status(201).json({
+                message: "Trainer created",
+                trainer_id: results.insertId
+            });
         }
     );
 });
 
 
-    // 4. POST: Tilføj en eksisterende Pokémon til en træner (i bindingstabellen)
-     app.post("/trainer/catch/", (req, res) => {
-         const trainer_id = req.body.trainer_id;
-         const pokedex_number = req.body.pokedex_number;
+// 4. Tilføj en Pokémon til en trainer
+app.post('/trainer/catch/', (req, res) => {
+    const trainer_id = req.body.trainer_id;
+    const pokedex_number = req.body.pokedex_number;
 
-         connection.query(
-             "INSERT INTO trainer_pokemon (trainer_id, pokedex_number) VALUES (?, ?)",
-             [trainer_id, pokedex_number],
-             (error, results) => {
-                 res.send("Pokemon was caught");
-             }
-         );
-     });
+    if (!trainer_id || !pokedex_number) {
+        return res.status(400).json({
+            error: "Trainer og Pokémon skal vælges"
+        });
+    }
 
+    connection.query(
+        'INSERT INTO trainer_pokemon (trainer_id, pokedex_number) VALUES (?, ?)',
+        [trainer_id, pokedex_number],
+        (error, results) => {
+            if (error) {
+                console.error("SQL-fejl:", error);
+                return res.status(500).json({
+                    error: "Kunne ikke tilføje Pokémon"
+                });
+            }
 
-
-
-
-
-
-
-
-    // Start serveren
-    app.listen(3000, () => {
-        console.log(`Serveren kører! Gå til http://localhost:3000}`);
+            res.status(201).json({
+                message: "Pokemon was caught"
+            });
+        }
+    );
 });
-
-
-
-
-
-
-
-
-
-
-
 
 // Dashboard Get - Post
 
@@ -319,8 +274,6 @@ app.get('/dashboard/most-trainers', (req, res) => {
         res.json(results);
     });
 });
-
-
 
 /* Antal moves pr. Pokemon */
 
